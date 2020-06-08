@@ -1,4 +1,4 @@
-package com.company.People.Customer;
+package com.company.business.People.Customer;
 
 public class MiddleClassCustomer extends Customer {
 

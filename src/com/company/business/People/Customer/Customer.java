@@ -1,6 +1,6 @@
-package com.company.People.Customer;
+package com.company.business.People.Customer;
 
-import com.company.People.Human;
+import com.company.business.People.Human;
 
 public abstract class Customer extends Human {
 

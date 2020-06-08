@@ -1,7 +1,7 @@
-package com.company.Task;
+package com.company.business.Task;
 
-import com.company.People.Customer.Customer;
-import com.company.People.Worker.Worker;
+import com.company.business.People.Customer.Customer;
+import com.company.business.People.Worker.Worker;
 
 import java.util.ArrayList;
 import java.util.Date;
