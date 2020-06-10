@@ -1,29 +1,50 @@
 package com.company.business.Task;
 
+import com.company.TechnologyGenerator;
 import com.company.business.People.Customer.Customer;
-import com.company.business.People.Worker.Worker;
+import com.company.business.People.Customer.CustomerSelector;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Project {
-    private  String titleOfProject;
-    private Customer client;
-    private Date deadLine;
+    private String titleOfProject;
+    private String deadLine;
     private Double amountOfPenalty;
     private Double priceOfProject;
-    private List<Worker> WorkersOnProject = new ArrayList<>();
+    private Customer ownerOfTheProject;
     private Boolean payOnAdvance;
+    private List<Technology> technologyInProjectList;
+    private ProjectComplexity levelOfComplexity;
+    private Integer numberOfDaysToFinish = 0;
 
-    public Project(String titleOfProject,Customer client,Date deadLine,Double amountOfPenalty,
-                   Double priceOfProject,Boolean payOnAdvance){
+    public Project(String titleOfProject, String deadLine, Double amountOfPenalty,
+                   Double priceOfProject) {
+        CustomerSelector selector = new CustomerSelector();
+        this.ownerOfTheProject = selector.select();
+        this.titleOfProject = titleOfProject;
+        this.deadLine = deadLine;
+        this.amountOfPenalty = amountOfPenalty;
+        this.priceOfProject = priceOfProject;
+        TechnologyGenerator gen = new TechnologyGenerator();
+        this.technologyInProjectList = gen.generate();
+        for (Technology technology : technologyInProjectList) {
+            this.numberOfDaysToFinish += technology.getLevelOfAdvancement();
+        }
+        this.levelOfComplexity = ProjectComplexity.getComplexity(technologyInProjectList);
+    }
 
-        this.titleOfProject=titleOfProject;
-        this.client=client;
-        this.deadLine=deadLine;
-        this.amountOfPenalty=amountOfPenalty;
-        this.priceOfProject=priceOfProject;
-        this.payOnAdvance=payOnAdvance;
+    @Override
+    public String toString() {
+
+        return "Nazwa projektu: " + titleOfProject + "\n" + "Termin skończenia projektu: "
+                + deadLine + "\n" + "Cena projektu: " + priceOfProject + "\n" + "Poziom skomplikowania: " + levelOfComplexity + "\n------------------";
+    }
+
+    public ProjectComplexity getLevelOfComplexity() {
+        return levelOfComplexity;
+    }
+
+    public void setOwnerOfTheProject(Customer ownerOfTheProject) {
+        this.ownerOfTheProject = ownerOfTheProject;
     }
 }

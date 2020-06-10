@@ -10,6 +10,7 @@ public abstract class Customer extends Human {
 
     public Customer(String name, String surname, Double money, String email) {
         super(name, surname, money, email);
+
     }
 
     public Double getChanceOfLatePaymentByAWeek() {
@@ -34,5 +35,10 @@ public abstract class Customer extends Human {
 
     public void setChanceOfLosingTheContract(Double chanceOfLosingTheContract) {
         this.chanceOfLosingTheContract = chanceOfLosingTheContract;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getSurname() + " " + getEmail();
     }
 }

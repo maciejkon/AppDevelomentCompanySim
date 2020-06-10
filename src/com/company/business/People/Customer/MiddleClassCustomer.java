@@ -12,5 +12,6 @@ public class MiddleClassCustomer extends Customer {
         super.setChanceOfLatePaymentByAWeek(DEFAULT_CHANCE_OF_LATE_PAYMENT_BY_A_WEEK);
         super.setChanceToAvoidPunishment(DEFAULT_CHANCE_TO_AVOID_PUNISHMENT);
         super.setChanceOfLosingTheContract(DEFAULT_CHANCE_OF_LOSING_CONTRACT);
+
     }
 }

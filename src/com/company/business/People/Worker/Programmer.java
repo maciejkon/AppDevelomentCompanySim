@@ -51,8 +51,8 @@ public class Programmer extends Worker {
 
     }
 
-    public List<Technology> getListOfSkills() {
-        return listOfSkills;
+    public String getListOfSkills() {
+        return listOfSkills.toString();
     }
 
     public int getLevelOfSkill() {

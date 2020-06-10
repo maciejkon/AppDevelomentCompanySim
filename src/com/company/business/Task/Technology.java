@@ -18,4 +18,8 @@ public class Technology {
     public String toString() {
         return nameOfTechnology;
     }
+
+    public Integer getLevelOfAdvancement() {
+        return levelOfAdvancement;
+    }
 }

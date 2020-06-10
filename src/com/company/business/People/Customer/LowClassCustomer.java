@@ -16,9 +16,12 @@ public class LowClassCustomer extends Customer {
         super.setChanceToAvoidPunishment(DEFAULT_CHANCE_TO_AVOID_PUNISHMENT);
         super.setChanceOfLosingTheContract(DEFAULT_CHANCE_OF_LOSING_CONTRACT);
 
-        this.chanceOfLatePaymentByAMonth=0.05;
-        this.chanceOfNeverGetPaid=0.01;
+        this.chanceOfLatePaymentByAMonth = 0.05;
+        this.chanceOfNeverGetPaid = 0.01;
+
+
     }
+
 
     public Double getChanceOfLatePaymentByAMonth() {
         return chanceOfLatePaymentByAMonth;

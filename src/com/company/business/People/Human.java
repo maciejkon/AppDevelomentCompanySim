@@ -22,4 +22,15 @@ public abstract class Human {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }
