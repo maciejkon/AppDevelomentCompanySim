@@ -32,14 +32,14 @@ public class WorkerGenerator {
     private List<Worker> generateWorkerList() {
         List<Worker> workersList = new ArrayList<>();
 
-        workersList.add(new Programmer("Maciej", "Weltrowski", 1000.0, "maciejweltrowski@gmail.com"));
-        workersList.add(new Programmer("Rafał", "Zakrzewski", 10000.0, "maciejweltrowski@gmail.com"));
-        workersList.add(new Programmer("Jan", "Kowalski", 500.0, "maciejweltrowski@gmail.com"));
-        workersList.add(new Programmer("Przemek", "Kucharczyk", 2000.0, "maciejweltrowski@gmail.com"));
-        workersList.add(new Programmer("Przemek", "Kucharczyk", 2000.0, "maciejweltrowski@gmail.com"));
-        workersList.add(new Programmer("Przemek", "Kucharczyk", 2000.0, "maciejweltrowski@gmail.com"));
-        workersList.add(new Programmer("Przemek", "Kucharczyk", 2000.0, "maciejweltrowski@gmail.com"));
-        workersList.add(new Programmer("Przemek", "Kucharczyk", 2000.0, "maciejweltrowski@gmail.com"));
+        workersList.add(new Programmer("Maciej", "Weltrowski", 1000.0));
+        workersList.add(new Programmer("Rafał", "Zakrzewski", 10000.0));
+        workersList.add(new Programmer("Jan", "Kowalski", 500.0));
+        workersList.add(new Programmer("Mieszko ", "Tomaszewski", 2000.0));
+        workersList.add(new Programmer("Artur ", "Kaźmierczak", 2500.0));
+        workersList.add(new Programmer("Józef", "Maciejewski", 3000.0));
+        workersList.add(new Programmer("Aleks ", "Makowski", 1500.0));
+        workersList.add(new Programmer("Aureliusz ", "Kubiak", 500.0));
 
 
         return workersList;

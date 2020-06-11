@@ -1,5 +1,7 @@
 package com.company.business.Task;
 
+import java.util.Objects;
+
 public class Technology {
     private String nameOfTechnology;
     private Integer levelOfAdvancement;
@@ -21,5 +23,18 @@ public class Technology {
 
     public Integer getLevelOfAdvancement() {
         return levelOfAdvancement;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Technology that = (Technology) o;
+        return nameOfTechnology.equals(that.nameOfTechnology);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nameOfTechnology);
     }
 }

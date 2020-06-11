@@ -10,8 +10,8 @@ public class Player extends Human {
 
     private List<Technology> listOfTechnology = new ArrayList<>();
 
-    public Player(String name, String surname, Double money, String email) {
-        super(name, surname, money, email);
+    public Player(String name, String surname, Double money) {
+        super(name, surname, money);
 
         this.listOfTechnology.add(new Technology("backend", 14));
         this.listOfTechnology.add(new Technology("dataBase", 4));
@@ -19,6 +19,11 @@ public class Player extends Human {
         this.listOfTechnology.add(new Technology("WordPress", 4));
         this.listOfTechnology.add(new Technology("PrestaShop", 4));
     }
+
+    public List<Technology> getListOfTechnology() {
+        return listOfTechnology;
+    }
+
 
 }
 

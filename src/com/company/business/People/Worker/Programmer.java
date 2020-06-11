@@ -11,11 +11,12 @@ public class Programmer extends Worker {
     private int levelOfSkill;
 
 
-    public Programmer(String name, String surname, Double money, String email) {
-        super(name, surname, money, email);
+    public Programmer(String name, String surname, Double money) {
+        super(name, surname, money);
 
         TechnologyGenerator gen = new TechnologyGenerator();
         this.listOfSkills = gen.generate();
+        setListOfSkills(this.listOfSkills);
         switch (this.listOfSkills.size()) {
             case 3:
                 this.levelOfSkill = 3;
@@ -51,9 +52,6 @@ public class Programmer extends Worker {
 
     }
 
-    public String getListOfSkills() {
-        return listOfSkills.toString();
-    }
 
     public int getLevelOfSkill() {
         return levelOfSkill;

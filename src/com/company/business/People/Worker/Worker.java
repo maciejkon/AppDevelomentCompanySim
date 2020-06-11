@@ -2,6 +2,9 @@ package com.company.business.People.Worker;
 
 
 import com.company.business.People.Human;
+import com.company.business.Task.Technology;
+
+import java.util.List;
 
 public class Worker extends Human {
 
@@ -12,9 +15,10 @@ public class Worker extends Human {
     private Double chanceToGetSick;
     private Double riskOfCorrection;
     private Double riskOfDelay;
+    private List<Technology> listOfSkills;
 
-    public Worker(String name, String surname, Double money, String email) {
-        super(name, surname, money, email);
+    public Worker(String name, String surname, Double money) {
+        super(name, surname, money);
     }
 
 
@@ -72,5 +76,13 @@ public class Worker extends Human {
 
     public Double getRiskOfDelay() {
         return riskOfDelay;
+    }
+
+    public List<Technology> getListOfSkills() {
+        return listOfSkills;
+    }
+
+    public void setListOfSkills(List<Technology> listOfSkills) {
+        this.listOfSkills = listOfSkills;
     }
 }

@@ -4,13 +4,12 @@ public abstract class Human {
     private final String name;
     private final String surname;
     private Double money;
-    private String email;
 
-    public Human(String name, String surname, Double money, String email) {
+
+    public Human(String name, String surname, Double money) {
         this.name = name;
         this.surname = surname;
         this.money = money;
-        this.email = email;
     }
 
     public Double getMoney() {
@@ -30,7 +29,4 @@ public abstract class Human {
         return surname;
     }
 
-    public String getEmail() {
-        return email;
-    }
 }

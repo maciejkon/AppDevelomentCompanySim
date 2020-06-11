@@ -8,8 +8,8 @@ public abstract class Customer extends Human {
     private Double chanceToAvoidPunishment;
     private Double chanceOfLosingTheContract;
 
-    public Customer(String name, String surname, Double money, String email) {
-        super(name, surname, money, email);
+    public Customer(String name, String surname, Double money) {
+        super(name, surname, money);
 
     }
 
@@ -39,6 +39,6 @@ public abstract class Customer extends Human {
 
     @Override
     public String toString() {
-        return getName() + " " + getSurname() + " " + getEmail();
+        return getName() + " " + getSurname();
     }
 }
