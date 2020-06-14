@@ -1,7 +1,5 @@
 package com.company.business.People.Worker;
 
-import com.company.WorkerGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
 

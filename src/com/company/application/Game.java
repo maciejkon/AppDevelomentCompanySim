@@ -4,17 +4,14 @@ import com.company.business.People.Worker.Player;
 import com.company.business.company.Company;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Game {
 
-    public static LocalDate now;
     private Player player;
     private Company company;
 
     public Game() {
-        this.now = LocalDate.now();
         this.player = addNewPlayer();
         this.company = new Company(this.player);
     }
@@ -34,46 +31,54 @@ public class Game {
     public void startGame() throws IOException {
         Menu menuObject = new Menu();
 
-        System.out.println();
-        System.out.println("**************************************");
-        System.out.println("*               APPSTORE             *");
-        System.out.println("**************************************");
-        System.out.println("Witaj: " + this.player.getName() + " " + this.player.getSurname() + this.player.getMoney());
-        System.out.println("Twoje umiejętności to: " + this.player.getListOfTechnology());
-        System.out.println("Wybierz projekt początkowy!\n------------------");
+        company.showWelcomeInfo();
         company.addNewProject();
         Scanner in = new Scanner(System.in);
 
+        company.showActualInfo();
         int number = menuObject.menu();
+
         while (number != 0) {
+
             switch (number) {
                 case 1:
                     company.addNewProject();
-
+                    company.newDay();
                     break;
                 case 2:
+                    company.newDay();
+
                     break;
                 case 3:
                     company.workOnProjects();
+                    company.newDay();
+
                     break;
                 case 4:
+                    company.newDay();
+
                     break;
                 case 5:
                     company.finishProject();
+                    company.newDay();
+
                     break;
                 case 6:
                     company.addNewWorker();
+                    company.newDay();
+
                     break;
                 case 7:
                     company.fireWorker();
+                    company.newDay();
+
                     break;
                 case 8:
+                    company.newDay();
                     break;
-
             }
 
-            System.out.println("\nWciśnij Enter, aby kontynuować...");
-            System.in.read();
+            company.showActualInfo();
 
             number = menuObject.menu();
         }
@@ -81,11 +86,5 @@ public class Game {
         System.out.println("\n     Koniec programu\n\n");
     }
 
-    public LocalDate getNow() {
-        return now;
-    }
 
-    public void setNow(LocalDate now) {
-        this.now = now;
-    }
 }

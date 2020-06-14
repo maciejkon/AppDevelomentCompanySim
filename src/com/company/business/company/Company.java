@@ -1,5 +1,6 @@
 package com.company.business.company;
 
+import com.company.business.People.Human;
 import com.company.business.People.Worker.Player;
 import com.company.business.People.Worker.Worker;
 import com.company.business.People.Worker.WorkerMarket;
@@ -8,21 +9,22 @@ import com.company.business.Task.ProjectComplexity;
 import com.company.business.Task.ProjectGenerator;
 import com.company.business.Task.Technology;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Company {
+    private LocalDate now;
     WorkerMarket market = new WorkerMarket();
     private Player owner;
-
-
     private List<Worker> listOfWorkers = new ArrayList<>();
     private List<Project> listOfProjects = new ArrayList<>();
     static Scanner in = new Scanner(System.in);
     private Double money;
 
     public Company(Player owner) {
+        this.now = LocalDate.of(2020, 01, 01);
         this.owner = owner;
         this.money = 10000.0;
     }
@@ -51,12 +53,12 @@ public class Company {
         int number;
         System.out.println("Wybierz pracownika: ");
         for (int i = 0; i < listOfWorkers.size(); i++) {
-            System.out.println("Lista pracowników: \n" + i + listOfWorkers.get(i).getName() + " " + listOfWorkers.get(i).getSurname() + " " + listOfWorkers.get(i).getEmploymentCost());
+            System.out.println(i + 1 + "\nImię: " + listOfWorkers.get(i).getName() + "\n" + "Nazwisko: " + listOfWorkers.get(i).getSurname() + "\nKoszt zwolnienia: " + listOfWorkers.get(i).getCostOfDismissal());
         }
         number = in.nextInt();
-        market.addWorkerToTheMarket(listOfWorkers.get(number));
-        setMoney(getMoney() - listOfWorkers.get(number).getCostOfDismissal());
-        listOfWorkers.remove(number);
+        market.addWorkerToTheMarket(listOfWorkers.get(number - 1));
+        setMoney(getMoney() - listOfWorkers.get(number - 1).getCostOfDismissal());
+        listOfWorkers.remove(number - 1);
     }
 
     public void addNewProject() {
@@ -64,20 +66,32 @@ public class Company {
         List<Project> randWork = gen.generate(3);
         boolean choose = false;
         while (choose != true) {
-            int number;
+
+            Integer number;
             for (int i = 0; i < randWork.size(); i++) {
-                System.out.println(i + ". " + randWork.get(i).toString());
+                randWork.get(i).setTimeOfAddingProject(now);
+                System.out.println(i + 1 + ". " + randWork.get(i).toString());
             }
-            System.out.println("Wybierz project: ");
+            System.out.println("Wybierz project lub wciśnij 0 zeby wyjść: ");
             number = in.nextInt();
-            Project selectedProject = randWork.get(number);
+
+            if (number == 0) {
+                break;
+            }
+
+            if (number - 1 >= randWork.size()) {
+                System.out.println("Niepoprawna liczba, spróbuj ponownie!");
+                continue;
+            }
+
+            Project selectedProject = randWork.get(number - 1);
 
             if (!getListOfSkillsInCompany().containsAll(selectedProject.getTechnologyInProjectList())) {
                 System.out.println("<<Error>>: Nie umiesz technologii zawartych w tym projekcie, Spróbuj ponownie (wybierz inny projekt)!" + "\n------------------");
             } else if (listOfWorkers.isEmpty() && selectedProject.getLevelOfComplexity().equals(ProjectComplexity.HIGH)) {
                 System.out.println("<<Error>>: Nie mając pracowników nie mozesz realizować projektów z wysoką złożonością> Spróbuj ponownie! " + "\n------------------");
             } else {
-                listOfProjects.add(randWork.get(number));
+                listOfProjects.add(selectedProject);
                 System.out.println("Twoje projekty: ");
                 for (Project project : listOfProjects) {
                     System.out.println("------------------\n" + project.toString() + "\n------------------");
@@ -89,14 +103,15 @@ public class Company {
     }
 
     public void workOnProjects() {
-        int number;
+        int numberOfProject;
         for (int i = 0; i < listOfProjects.size(); i++) {
             System.out.println(i + ". " + listOfProjects.get(i).toString());
         }
         System.out.println("Wybierz project: ");
-        number = in.nextInt();
+        numberOfProject = in.nextInt();
 
-        Project selectedProject = listOfProjects.get(number);
+        Project selectedProject = listOfProjects.get(numberOfProject);
+        selectedProject.addWorkerToTheProject(chooseWorkerInProject());
         selectedProject.workOneDay();
     }
 
@@ -116,6 +131,25 @@ public class Company {
         System.out.println("Ukończyłeś projekt: " + selectedProject);
     }
 
+    public Human chooseWorkerInProject() {
+        Integer number;
+        List<Human> tempListOfAllWorkers = new ArrayList<>();
+        tempListOfAllWorkers.add(owner);
+        tempListOfAllWorkers.addAll(listOfWorkers);
+
+        System.out.println("Wybierz pracownika do pracy przy tym projekcie: ");
+        for (int i = 0; i < tempListOfAllWorkers.size(); i++) {
+            System.out.println(i + 1 + ". " + tempListOfAllWorkers.get(i).toString());
+        }
+        number = in.nextInt();
+        return tempListOfAllWorkers.get(number - 1);
+    }
+
+    public void newDay() {
+        this.now = now.plusDays(1);
+    }
+
+
     private List<Technology> getListOfSkillsInCompany() {
         List<Technology> listOfSkills = new ArrayList<>();
 
@@ -132,6 +166,10 @@ public class Company {
         return money;
     }
 
+    public List<Project> getListOfProjects() {
+        return listOfProjects;
+    }
+
     public void setMoney(Double money) {
         this.money = money;
     }
@@ -139,5 +177,31 @@ public class Company {
     public List<Worker> getListOfWorkers() {
         return listOfWorkers;
     }
+
+    public LocalDate getCurrentDate() {
+        return now;
+    }
+
+    public void showActualInfo() {
+        System.out.println("     Data: " + getCurrentDate());
+        System.out.println("     Stan konta firmy: " + getMoney());
+        System.out.println("     Postępy projektów: ");
+        for (int i = 0; i < listOfProjects.size(); i++) {
+            System.out.println("     " + i + 1 + ". " + listOfProjects.get(i).getTitleOfProject() + " Postęp (w dniach): " +
+                    listOfProjects.get(i).getCurrentDaysOfWork() + "/" + listOfProjects.get(i).getRequiredDaysOfWork());
+        }
+    }
+
+    public void showWelcomeInfo() {
+        System.out.println();
+        System.out.println("     **************************************");
+        System.out.println("     *               APPSTORE             *");
+        System.out.println("     **************************************");
+        System.out.println("     Witaj: " + this.owner.getName() + " " + this.owner.getSurname());
+        System.out.println("     Twoje umiejętności to: " + this.owner.getListOfTechnology());
+        System.out.println("     Wybierz projekt początkowy!\n------------------");
+    }
+
+
 }
 

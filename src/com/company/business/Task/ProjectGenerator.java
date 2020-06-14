@@ -1,5 +1,6 @@
 package com.company.business.Task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,31 +32,31 @@ public class ProjectGenerator {
         List<Project> projectList = new ArrayList<>();
 
         projectList.add(new Project("Tinder",
-                1500.0, 3000.0));
+                1500.0, 3000.0, LocalDate.of(2020, 01, 25)));
         projectList.add(new Project("FaceBook",
-                3000.0, 6000.0));
+                3000.0, 6000.0, LocalDate.of(2020, 02, 01)));
         projectList.add(new Project("SnapChat",
-                2000.0, 4000.0));
+                2000.0, 4000.0, LocalDate.of(2020, 01, 18)));
         projectList.add(new Project("Uber",
-                1000.0, 2000.0));
+                1000.0, 2000.0, LocalDate.of(2020, 02, 02)));
         projectList.add(new Project("Instagram",
-                3000.0, 6000.0));
+                3000.0, 6000.0, LocalDate.of(2020, 01, 19)));
         projectList.add(new Project("Messenger",
-                1500.0, 3000.0));
+                1500.0, 3000.0, LocalDate.of(2020, 01, 21)));
         projectList.add(new Project("Glovo",
-                500.0, 1000.0));
+                500.0, 1000.0, LocalDate.of(2020, 01, 22)));
         projectList.add(new Project("YouTube",
-                3500.0, 7000.0));
+                3500.0, 7000.0, LocalDate.of(2020, 02, 03)));
         projectList.add(new Project("Netflix",
-                4000.0, 8000.0));
+                4000.0, 8000.0, LocalDate.of(2020, 01, 25)));
         projectList.add(new Project("HBO GO",
-                3000.0, 6000.0));
+                3000.0, 6000.0, LocalDate.of(2020, 01, 23)));
         projectList.add(new Project("Gmail",
-                2000.0, 4000.0));
+                2000.0, 4000.0, LocalDate.of(2020, 02, 04)));
         projectList.add(new Project("Udemy",
-                2500.0, 5000.0));
+                2500.0, 5000.0, LocalDate.of(2020, 01, 17)));
         projectList.add(new Project("Spotify",
-                3500.0, 7000.0));
+                3500.0, 7000.0, LocalDate.of(2020, 01, 27)));
 
         return projectList;
     }

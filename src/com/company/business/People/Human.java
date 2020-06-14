@@ -29,4 +29,8 @@ public abstract class Human {
         return surname;
     }
 
+    @Override
+    public String toString() {
+        return "Imię: " + name + " Nazwisko: " + surname;
+    }
 }
