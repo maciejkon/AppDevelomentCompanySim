@@ -1,6 +1,4 @@
-package com.company;
-
-import com.company.business.Task.Technology;
+package com.company.business.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +30,12 @@ public class TechnologyGenerator {
     private List<Technology> generateTechnologyList() {
         List<Technology> technologyList = new ArrayList<>();
 
-        technologyList.add(new Technology("front-end", 5));
-        technologyList.add(new Technology("backend", 14));
-        technologyList.add(new Technology("dataBase", 4));
-        technologyList.add(new Technology("mobile", 7));
-        technologyList.add(new Technology("WordPress", 4));
-        technologyList.add(new Technology("PrestaShop", 4));
+        technologyList.add(new Technology("front-end", 3));
+        technologyList.add(new Technology("backend", 7));
+        technologyList.add(new Technology("dataBase", 2));
+        technologyList.add(new Technology("mobile", 4));
+        technologyList.add(new Technology("WordPress", 2));
+        technologyList.add(new Technology("PrestaShop", 2));
 
         return technologyList;
     }

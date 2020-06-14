@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class Menu {
 
+
     public int menu() {
+        System.out.println(Game.now);
         System.out.println();
         System.out.println("     ****************************************");
         System.out.println("     *                 MENU                 *");

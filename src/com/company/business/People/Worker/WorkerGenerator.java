@@ -1,7 +1,4 @@
-package com.company;
-
-import com.company.business.People.Worker.Programmer;
-import com.company.business.People.Worker.Worker;
+package com.company.business.People.Worker;
 
 import java.util.ArrayList;
 import java.util.List;

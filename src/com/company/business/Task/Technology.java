@@ -21,8 +21,8 @@ public class Technology {
         return nameOfTechnology;
     }
 
-    public Integer getLevelOfAdvancement() {
-        return levelOfAdvancement;
+    public long getLevelOfAdvancement() {
+        return (long) levelOfAdvancement;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.company.business.People.Worker;
 
-import com.company.TechnologyGenerator;
 import com.company.business.Task.Technology;
+import com.company.business.Task.TechnologyGenerator;
 
 import java.util.List;
 
