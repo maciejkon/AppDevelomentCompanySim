@@ -5,6 +5,7 @@ import com.company.business.People.Human;
 import com.company.business.Task.Technology;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Worker extends Human {
 
@@ -16,6 +17,7 @@ public class Worker extends Human {
     private Double riskOfCorrection;
     private Double riskOfDelay;
     private List<Technology> listOfSkills;
+    private WorkerRoleInCompany roleInCompany;
 
     public Worker(String name, String surname, Double money) {
         super(name, surname, money);
@@ -84,5 +86,26 @@ public class Worker extends Human {
 
     public void setListOfSkills(List<Technology> listOfSkills) {
         this.listOfSkills = listOfSkills;
+    }
+
+    public WorkerRoleInCompany getRoleInCompany() {
+        return roleInCompany;
+    }
+
+    public void setRoleInCompany(WorkerRoleInCompany roleInCompany) {
+        this.roleInCompany = roleInCompany;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return roleInCompany.equals(worker.roleInCompany);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roleInCompany);
     }
 }

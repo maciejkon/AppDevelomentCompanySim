@@ -43,41 +43,29 @@ public class Game {
             switch (number) {
                 case 1:
                     company.addNewProject();
-                    company.newDay();
                     break;
                 case 2:
-                    company.newDay();
-
+                    company.lookForNewClient();
                     break;
                 case 3:
                     company.workOnProjects();
-                    company.newDay();
-
                     break;
                 case 4:
-                    company.newDay();
-
+                    company.testCode();
                     break;
                 case 5:
                     company.finishProject();
-                    company.newDay();
-
                     break;
                 case 6:
                     company.addNewWorker();
-                    company.newDay();
-
                     break;
                 case 7:
                     company.fireWorker();
-                    company.newDay();
-
                     break;
                 case 8:
-                    company.newDay();
+                    company.bookkeeping();
                     break;
             }
-
             company.showActualInfo();
 
             number = menuObject.menu();

@@ -14,6 +14,7 @@ public class Programmer extends Worker {
     public Programmer(String name, String surname, Double money) {
         super(name, surname, money);
 
+        setRoleInCompany(WorkerRoleInCompany.PROGRAMMER);
         TechnologyGenerator gen = new TechnologyGenerator();
         this.listOfSkills = gen.generate();
         setListOfSkills(this.listOfSkills);

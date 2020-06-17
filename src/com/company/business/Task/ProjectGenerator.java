@@ -32,31 +32,31 @@ public class ProjectGenerator {
         List<Project> projectList = new ArrayList<>();
 
         projectList.add(new Project("Tinder",
-                1500.0, 3000.0, LocalDate.of(2020, 01, 25)));
+                1500.0, 3000.0, LocalDate.of(2020, 01, 15)));
         projectList.add(new Project("FaceBook",
-                3000.0, 6000.0, LocalDate.of(2020, 02, 01)));
+                3000.0, 6000.0, LocalDate.of(2020, 01, 16)));
         projectList.add(new Project("SnapChat",
-                2000.0, 4000.0, LocalDate.of(2020, 01, 18)));
+                2000.0, 4000.0, LocalDate.of(2020, 01, 17)));
         projectList.add(new Project("Uber",
-                1000.0, 2000.0, LocalDate.of(2020, 02, 02)));
+                1000.0, 2000.0, LocalDate.of(2020, 01, 15)));
         projectList.add(new Project("Instagram",
-                3000.0, 6000.0, LocalDate.of(2020, 01, 19)));
+                3000.0, 6000.0, LocalDate.of(2020, 01, 16)));
         projectList.add(new Project("Messenger",
-                1500.0, 3000.0, LocalDate.of(2020, 01, 21)));
+                1500.0, 3000.0, LocalDate.of(2020, 01, 17)));
         projectList.add(new Project("Glovo",
-                500.0, 1000.0, LocalDate.of(2020, 01, 22)));
+                500.0, 1000.0, LocalDate.of(2020, 01, 16)));
         projectList.add(new Project("YouTube",
-                3500.0, 7000.0, LocalDate.of(2020, 02, 03)));
+                3500.0, 7000.0, LocalDate.of(2020, 01, 15)));
         projectList.add(new Project("Netflix",
-                4000.0, 8000.0, LocalDate.of(2020, 01, 25)));
+                4000.0, 8000.0, LocalDate.of(2020, 01, 16)));
         projectList.add(new Project("HBO GO",
-                3000.0, 6000.0, LocalDate.of(2020, 01, 23)));
+                3000.0, 6000.0, LocalDate.of(2020, 01, 16)));
         projectList.add(new Project("Gmail",
-                2000.0, 4000.0, LocalDate.of(2020, 02, 04)));
+                2000.0, 4000.0, LocalDate.of(2020, 01, 15)));
         projectList.add(new Project("Udemy",
-                2500.0, 5000.0, LocalDate.of(2020, 01, 17)));
+                2500.0, 5000.0, LocalDate.of(2020, 01, 15)));
         projectList.add(new Project("Spotify",
-                3500.0, 7000.0, LocalDate.of(2020, 01, 27)));
+                3500.0, 7000.0, LocalDate.of(2020, 01, 16)));
 
         return projectList;
     }

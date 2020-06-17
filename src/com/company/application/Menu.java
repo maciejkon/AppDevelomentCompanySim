@@ -26,5 +26,18 @@ public class Menu {
         return w;
     }
 
+    public int additionalMenu() {
+
+        System.out.println("     1. Pracuj sam");
+        System.out.println("     2. Szukaj Klientów");
+        System.out.println("     3. Pracuj nad projektem");
+
+
+        Scanner in = new Scanner(System.in);
+        int w = in.nextInt();
+
+        return w;
+    }
+
 }
 

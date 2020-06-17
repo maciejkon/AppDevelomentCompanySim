@@ -15,7 +15,7 @@ public class WorkerGenerator {
         List<Worker> listOfRandomWorkers = new ArrayList<>();
 
         Random r = new Random();
-        int numberOfWorkers = r.ints(1, 3, 9).findFirst().getAsInt();
+        int numberOfWorkers = r.ints(1, 3, 7).findFirst().getAsInt();
         for (int i = 0; i < numberOfWorkers; i++) {
             int indexOfTechnology = r.ints(1, 0, allWorkers.size()).findFirst().getAsInt();
 
@@ -37,6 +37,9 @@ public class WorkerGenerator {
         workersList.add(new Programmer("Józef", "Maciejewski", 3000.0));
         workersList.add(new Programmer("Aleks ", "Makowski", 1500.0));
         workersList.add(new Programmer("Aureliusz ", "Kubiak", 500.0));
+        workersList.add(new Seller("Hubert", "Witkowski", 500.0));
+        workersList.add(new Tester("Miron", "Kwiatkowski", 500.0));
+        workersList.add(new Seller("Konstanty", "Lis", 500.0));
 
 
         return workersList;

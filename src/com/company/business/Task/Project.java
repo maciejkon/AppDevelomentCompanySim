@@ -22,6 +22,7 @@ public class Project {
     private Double amountOfPenalty;
     private Double priceOfProject;
     private Boolean payOnAdvance;
+    private Boolean wasTested;
     private ProjectComplexity levelOfComplexity;
     private List<Human> listOfWorkersInProject = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class Project {
         this.requiredDaysOfWork = countDaysToFinish();
 
         this.deadLine = deadLine;
-        this.dateOfPayment = this.deadLine.plusDays(7);
+        this.dateOfPayment = this.deadLine.plusDays(3);
 
     }
 
@@ -60,7 +61,7 @@ public class Project {
         return "\nNazwa projektu: " + titleOfProject + "\n"
                 + "Zapłata za projekt: " + priceOfProject + " zł" + "\n" + "Data oddania projektu: " + deadLine + "\n" + "Data otrzymania zapłaty: " + dateOfPayment + "\n" + "Przewidywana data skończenia projektu: " + timeOfAddingProject.plusDays(requiredDaysOfWork) + "\n" + "Poziom skomplikowania: "
                 + levelOfComplexity + "\n" + "Właściciel projektu: " + ownerOfTheProject + "\n" + "Wymagane technologie: " +
-                technologyInProjectList.toString() + listOfWorkersInProject + "\n------------------";
+                technologyInProjectList.toString() + "\n------------------";
     }
 
     public int countDaysToFinish() {
@@ -104,6 +105,10 @@ public class Project {
         return priceOfProject;
     }
 
+    public void setPriceOfProject(Double priceOfProject) {
+        this.priceOfProject = priceOfProject;
+    }
+
     public void workOneDay() {
         this.currentDaysOfWork += 1;
     }
@@ -122,5 +127,14 @@ public class Project {
 
     public int getRequiredDaysOfWork() {
         return requiredDaysOfWork;
+    }
+
+
+    public Boolean getWasTested() {
+        return wasTested;
+    }
+
+    public void setWasTested(Boolean wasTested) {
+        this.wasTested = wasTested;
     }
 }
