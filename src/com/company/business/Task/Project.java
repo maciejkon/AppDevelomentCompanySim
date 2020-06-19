@@ -22,7 +22,9 @@ public class Project {
     private Double amountOfPenalty;
     private Double priceOfProject;
     private Boolean payOnAdvance;
-    private Boolean wasTested;
+    private Boolean wasTested = false;
+    private Boolean wasTestedByOwner = false;
+    private Boolean getBySeller = false;
     private ProjectComplexity levelOfComplexity;
     private List<Human> listOfWorkersInProject = new ArrayList<>();
 
@@ -51,7 +53,7 @@ public class Project {
         this.requiredDaysOfWork = countDaysToFinish();
 
         this.deadLine = deadLine;
-        this.dateOfPayment = this.deadLine.plusDays(3);
+        this.dateOfPayment = deadLine;
 
     }
 
@@ -136,5 +138,37 @@ public class Project {
 
     public void setWasTested(Boolean wasTested) {
         this.wasTested = wasTested;
+    }
+
+    public Boolean getGetBySeller() {
+        return getBySeller;
+    }
+
+    public void setGetBySeller(Boolean getBySeller) {
+        this.getBySeller = getBySeller;
+    }
+
+    public Boolean getWasTestedByOwner() {
+        return wasTestedByOwner;
+    }
+
+    public void setWasTestedByOwner(Boolean wasTestedByOwner) {
+        this.wasTestedByOwner = wasTestedByOwner;
+    }
+
+    public void setDateOfPayment(LocalDate dateOfPayment) {
+        this.dateOfPayment = dateOfPayment;
+    }
+
+    public LocalDate getDateOfPayment() {
+        return dateOfPayment;
+    }
+
+    public Double getAmountOfPenalty() {
+        return amountOfPenalty;
+    }
+
+    public Customer getOwnerOfTheProject() {
+        return ownerOfTheProject;
     }
 }

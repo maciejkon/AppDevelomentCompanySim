@@ -1,10 +1,7 @@
 package com.company.business.company;
 
 import com.company.business.People.Human;
-import com.company.business.People.Worker.Player;
-import com.company.business.People.Worker.Worker;
-import com.company.business.People.Worker.WorkerMarket;
-import com.company.business.People.Worker.WorkerRoleInCompany;
+import com.company.business.People.Worker.*;
 import com.company.business.Task.Project;
 import com.company.business.Task.ProjectComplexity;
 import com.company.business.Task.ProjectGenerator;
@@ -14,6 +11,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Company {
@@ -21,6 +19,7 @@ public class Company {
     WorkerMarket market = new WorkerMarket();
     private List<Worker> listOfWorkers = new ArrayList<>();
     private List<Project> listOfProjects = new ArrayList<>();
+    private List<Project> listOfDoneProjects = new ArrayList<>();
 
     private LocalDate now;
     private Player owner;
@@ -42,6 +41,9 @@ public class Company {
             if (this.currentDaysOfLookingForNewClient >= 5) {
                 int numberOfProjects = currentDaysOfLookingForNewClient / 5;
                 List<Project> randProjAfterSearching = gen.generate(numberOfProjects);
+                for (Project project : randProjAfterSearching) {
+                    project.setGetBySeller(true);
+                }
                 randProj.addAll(randProjAfterSearching);
                 currentDaysOfLookingForNewClient -= numberOfProjects * 5;
                 System.out.println("Dodano: " + randProjAfterSearching.size());
@@ -142,21 +144,29 @@ public class Company {
             Project selectedProject = listOfProjects.get(numberOfProject - 1);
             if (selectedProject.getCurrentDaysOfWork() == selectedProject.getRequiredDaysOfWork()) {
                 System.out.println("UWAGA!! Ten projekt jest gotowy do oddania ");
-                choose = true;
             } else {
                 if (selectedProject.getListOfWorkersInProject().isEmpty()) {
                     selectedProject.addWorkerToTheProject(chooseWorkerInProject());
                 }
                 selectedProject.workOneDay();
                 newDay();
-                choose = true;
             }
+            choose = true;
         }
     }
 
     public void testCode() {
         boolean choose = false;
         while (choose != true) {
+            for (int i = 0; i < listOfWorkers.size(); i++) {
+                if (listOfWorkers.get(i).getRoleInCompany().equals(WorkerRoleInCompany.TESTER)) {
+                    System.out.println("Nie musisz testować samodzielnie jeśli w drużynie masz testera");
+                    for (Project project : listOfProjects) {
+                        project.setWasTested(true);
+                        choose = true;
+                    }
+                }
+            }
             int numberOfProject;
             for (int i = 0; i < listOfProjects.size(); i++) {
                 System.out.println(i + 1 + ". " + listOfProjects.get(i).toString());
@@ -172,7 +182,9 @@ public class Company {
             }
             Project selectedProject = listOfProjects.get(numberOfProject - 1);
             selectedProject.setWasTested(true);
-            System.out.println("Kod został przetestowany");
+            selectedProject.setWasTestedByOwner(true);
+            System.out.println("SUCCESS: Kod został przetestowany");
+            newDay();
             choose = true;
         }
 
@@ -199,25 +211,48 @@ public class Company {
                 continue;
             } else {
                 Project selectedProject = listOfProjects.get(number - 1);
+                if (!selectedProject.getWasTested()) {
+                    if (isChanceHappendWith(selectedProject.getOwnerOfTheProject().getChanceOfLosingTheContract())) {
+                        System.out.println("Oddałeś niedziałający projekt, nie otrzymujesz zapłaty");
+                        listOfProjects.remove(selectedProject);
+                        System.out.println("Ukończyłeś projekt: " + selectedProject.getTitleOfProject());
+                        listOfDoneProjects.add(selectedProject);
+                        newDay();
+                        choose = true;
+                    } else {
+                        System.out.println("Oddałeś niedziałający projekt, ale nie tracisz kontraktu (przetestuj kod żeby otrzymać zapłatę) ");
+                    }
+                } else {
+                    if (isChanceHappendWith(selectedProject.getOwnerOfTheProject().getChanceOfLatePaymentByAWeek())) {
+                        selectedProject.setDateOfPayment(selectedProject.getDateOfPayment().plusDays(7));
+                    }
+                    if (isChanceHappendWith(selectedProject.getOwnerOfTheProject().getChanceOfLatePaymentByAMonth())) {
+                        selectedProject.setDateOfPayment(selectedProject.getDateOfPayment().plusMonths(1));
+                    }
+                    if (isChanceHappendWith(selectedProject.getOwnerOfTheProject().getChanceOfNeverGetPaid())) {
+                        selectedProject.setDateOfPayment(LocalDate.of(0000, 00, 00));
+                    }
+                    if (selectedProject.getDateOfPayment().equals(getCurrentDate())) {
+                        setMoney(getMoney() + selectedProject.getPriceOfProject());
+                    }
+                    listOfProjects.remove(selectedProject);
+                    System.out.println("Ukończyłeś projekt: " + selectedProject + " \npłatność otrzymasz: " + selectedProject.getDateOfPayment());
+                    listOfDoneProjects.add(selectedProject);
+                    newDay();
+                    choose = true;
+                }
 
-                setMoney(getMoney() + selectedProject.getPriceOfProject());
-                listOfProjects.remove(selectedProject);
-                System.out.println("Ukończyłeś projekt: " + selectedProject);
-                newDay();
-                choose = true;
             }
-
         }
-
-
     }
 
     public void addNewWorker() {
-        List<Worker> randWork = market.getListOfWorkers();
 
         int number;
         boolean choose = false;
         while (choose != true) {
+            WorkerMarket market = new WorkerMarket();
+            List<Worker> randWork = market.getListOfWorkers();
             System.out.println("Pracownicy do wyboru: ");
             for (int i = 0; i < randWork.size(); i++) {
                 System.out.println(i + 1 + ". \n" + "Imie: " + randWork.get(i).getName() + "\n" + "Nazwisko: " + randWork.get(i).getSurname() + "\n" +
@@ -287,6 +322,27 @@ public class Company {
         }
     }
 
+    public void checkVictory() {
+        Integer numberOfHighComplexityProjects = 0;
+        for (int i = 0; i < listOfDoneProjects.size(); i++) {
+            if (listOfDoneProjects.get(i).getLevelOfComplexity().equals(ProjectComplexity.HIGH) &&
+                    !listOfDoneProjects.get(i).getListOfWorkersInProject().contains(owner) &&
+                    listOfProjects.get(i).getWasTestedByOwner().equals(false)) {
+                numberOfHighComplexityProjects++;
+            }
+        }
+        //na liście zrobionych projektów 3 mają złożoność high
+        //właściciel nie jest na listOfWorkerInProject
+        //właściciel nie testował, więc mamy testera
+        //jeden projekt znaleziony przez sprzedawce(jakieśoznaczenie na tym projekcie
+        // pieniężny stan koncowy wyższy od początkowego 
+    }
+
+    private Boolean isChanceHappendWith(int probability) {
+        Random rand = new Random();
+        return rand.nextInt(100) < probability;
+    }
+
 
     public Human chooseWorkerInProject() {
         Integer number;
@@ -298,13 +354,25 @@ public class Company {
             System.out.println("Dzień roboczy: możesz wybrać właściciela lub pracownika\n");
             tempListOfAllWorkers.add(owner);
             tempListOfAllWorkers.addAll(listOfWorkers);
+            for (int i = 0; i < tempListOfAllWorkers.size(); i++) {
+                System.out.println(i + 1 + "Imię: " + tempListOfAllWorkers.get(i).getName() + " Nazwisko: " + tempListOfAllWorkers.get(i).getSurname());
+            }
         }
-        System.out.println("Wybierz kto ma pracować przy tym projekcie: ");
-        for (int i = 0; i < tempListOfAllWorkers.size(); i++) {
-            System.out.println(i + 1 + ". " + tempListOfAllWorkers.get(i).toString());
-        }
+
         number = in.nextInt();
         return tempListOfAllWorkers.get(number - 1);
+    }
+
+    public Subcontractor chooseSubcontractorInProject() {
+        Integer number;
+        List<Subcontractor> tempListOfAllSubcontractors = new ArrayList<>();
+        System.out.println("Wybierz podwykonawcę: ");
+        for (int i = 0; i < tempListOfAllSubcontractors.size(); i++) {
+            System.out.println(i + 1 + ". " + tempListOfAllSubcontractors.get(i).toString());
+        }
+
+        number = in.nextInt();
+        return tempListOfAllSubcontractors.get(number - 1);
     }
 
     private List<Technology> getListOfSkillsInCompany() {
@@ -336,7 +404,7 @@ public class Company {
             System.out.println("     Postępy projektów: ");
             for (int i = 0; i < listOfProjects.size(); i++) {
                 System.out.println("     " + i + 1 + ". " + listOfProjects.get(i).getTitleOfProject() + " Postęp (w dniach): " +
-                        listOfProjects.get(i).getCurrentDaysOfWork() + "/" + listOfProjects.get(i).getRequiredDaysOfWork());
+                        listOfProjects.get(i).getCurrentDaysOfWork() + "/" + listOfProjects.get(i).getRequiredDaysOfWork() + listOfProjects.get(i).getWasTested());
             }
         }
     }
@@ -353,15 +421,10 @@ public class Company {
 
     public boolean numberChecker(Integer number, List list) {
         boolean status = true;
-
-
         if (number - 1 >= list.size()) {
             status = false;
         }
-
-
         return status;
-
     }
 
     public void newDay() {

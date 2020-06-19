@@ -8,7 +8,7 @@ public class CustomerSelector {
     private List<Customer> listOFCustomers = new ArrayList<>();
 
     public CustomerSelector() {
-        this.listOFCustomers.add(new HighClassCustomer("Janek", "Kowalski", 1000000.0));
+        this.listOFCustomers.add(new HighClassCustomer("Andrzej", "Ciesz1yński", 1000000.0));
         this.listOFCustomers.add(new MiddleClassCustomer("Jan", "Kowalski", 200000.0));
         this.listOFCustomers.add(new LowClassCustomer("Zbigniew", "Kulesza", 50000.0));
     }

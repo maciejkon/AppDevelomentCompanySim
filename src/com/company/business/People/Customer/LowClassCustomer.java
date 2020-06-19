@@ -2,32 +2,25 @@ package com.company.business.People.Customer;
 
 public class LowClassCustomer extends Customer {
 
-    private Double chanceOfLatePaymentByAMonth;
-    private Double chanceOfNeverGetPaid;
 
-    static final public Double DEFAULT_CHANCE_OF_LATE_PAYMENT_BY_A_WEEK = 0.3;
-    static final public Double DEFAULT_CHANCE_TO_AVOID_PUNISHMENT = 0.0;
-    static final public Double DEFAULT_CHANCE_OF_LOSING_CONTRACT = 1.0;
+    static final public Integer DEFAULT_CHANCE_OF_LATE_PAYMENT_BY_A_WEEK_IN_PERCENT = 30;
+    static final public Integer DEFAULT_CHANCE_TO_AVOID_PUNISHMENT_IN_PERCENT = 0;
+    static final public Integer DEFAULT_CHANCE_OF_LOSING_CONTRACT_IN_PERCENT = 100;
+    static final public Integer DEFAULT_CHANCE_OF_LATE_PAYMENT_BY_A_MONTH_IN_PERCENT = 5;
+    static final public Integer DEFAULT_CHANCE_TO_NEVER_GET_PAID_IN_PERCENT = 1;
 
     public LowClassCustomer(String name, String surname, Double money) {
         super(name, surname, money);
 
-        super.setChanceOfLatePaymentByAWeek(DEFAULT_CHANCE_OF_LATE_PAYMENT_BY_A_WEEK);
-        super.setChanceToAvoidPunishment(DEFAULT_CHANCE_TO_AVOID_PUNISHMENT);
-        super.setChanceOfLosingTheContract(DEFAULT_CHANCE_OF_LOSING_CONTRACT);
-
-        this.chanceOfLatePaymentByAMonth = 0.05;
-        this.chanceOfNeverGetPaid = 0.01;
+        super.setChanceOfLatePaymentByAWeek(DEFAULT_CHANCE_OF_LATE_PAYMENT_BY_A_WEEK_IN_PERCENT);
+        super.setChanceToAvoidPunishment(DEFAULT_CHANCE_TO_AVOID_PUNISHMENT_IN_PERCENT);
+        super.setChanceOfLosingTheContract(DEFAULT_CHANCE_OF_LOSING_CONTRACT_IN_PERCENT);
+        super.setChanceOfLatePaymentByAMonth(DEFAULT_CHANCE_OF_LATE_PAYMENT_BY_A_MONTH_IN_PERCENT);
+        super.setChanceOfNeverGetPaid(DEFAULT_CHANCE_TO_NEVER_GET_PAID_IN_PERCENT);
 
 
     }
 
 
-    public Double getChanceOfLatePaymentByAMonth() {
-        return chanceOfLatePaymentByAMonth;
-    }
 
-    public Double getChanceOfNeverGetPaid() {
-        return chanceOfNeverGetPaid;
-    }
 }
