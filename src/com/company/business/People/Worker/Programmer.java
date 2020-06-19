@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Programmer extends Worker {
 
-    private List<Technology> listOfSkills;
     private int levelOfSkill;
 
 
@@ -16,18 +15,18 @@ public class Programmer extends Worker {
 
         setRoleInCompany(WorkerRoleInCompany.PROGRAMMER);
         TechnologyGenerator gen = new TechnologyGenerator();
-        this.listOfSkills = gen.generate();
-        setListOfSkills(this.listOfSkills);
-        switch (this.listOfSkills.size()) {
+        List<Technology> listOfSkills = gen.generate();
+        setListOfSkills(listOfSkills);
+        switch (listOfSkills.size()) {
             case 3:
                 this.levelOfSkill = 3;
                 setEmploymentCost(2000.0);
                 setMaintenanceCost(200.0);
                 setCostOfDismissal(4000.0);
                 setWorkplaceCost(100.0);
-                setChanceToGetSick(0.1);
-                setRiskOfCorrection(0.0);
-                setRiskOfDelay(0.0);
+                setChanceToGetSick(10);
+                setRiskOfCorrection(0);
+                setRiskOfDelay(0);
                 break;
             case 2:
                 this.levelOfSkill = 2;
@@ -35,9 +34,9 @@ public class Programmer extends Worker {
                 setMaintenanceCost(100.0);
                 setCostOfDismissal(2000.0);
                 setWorkplaceCost(80.0);
-                setChanceToGetSick(0.2);
-                setRiskOfCorrection(0.1);
-                setRiskOfDelay(0.0);
+                setChanceToGetSick(20);
+                setRiskOfCorrection(10);
+                setRiskOfDelay(0);
                 break;
             case 1:
                 this.levelOfSkill = 1;
@@ -45,9 +44,9 @@ public class Programmer extends Worker {
                 setMaintenanceCost(50.0);
                 setCostOfDismissal(1000.0);
                 setWorkplaceCost(50.0);
-                setChanceToGetSick(0.3);
-                setRiskOfCorrection(0.2);
-                setRiskOfDelay(0.2);
+                setChanceToGetSick(30);
+                setRiskOfCorrection(20);
+                setRiskOfDelay(20);
                 break;
         }
 

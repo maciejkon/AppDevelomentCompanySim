@@ -13,9 +13,9 @@ public class Worker extends Human {
     private Double maintenanceCost;
     private Double costOfDismissal;
     private Double workplaceCost;
-    private Double chanceToGetSick;
-    private Double riskOfCorrection;
-    private Double riskOfDelay;
+    private Integer chanceToGetSick;
+    private Integer riskOfCorrection;
+    private Integer riskOfDelay;
     private List<Technology> listOfSkills;
     private WorkerRoleInCompany roleInCompany;
 
@@ -40,15 +40,15 @@ public class Worker extends Human {
         this.workplaceCost = workplaceCost;
     }
 
-    public void setChanceToGetSick(Double chanceToGetSick) {
+    public void setChanceToGetSick(Integer chanceToGetSick) {
         this.chanceToGetSick = chanceToGetSick;
     }
 
-    public void setRiskOfCorrection(Double riskOfCorrection) {
+    public void setRiskOfCorrection(Integer riskOfCorrection) {
         this.riskOfCorrection = riskOfCorrection;
     }
 
-    public void setRiskOfDelay(Double riskOfDelay) {
+    public void setRiskOfDelay(Integer riskOfDelay) {
         this.riskOfDelay = riskOfDelay;
     }
 
@@ -68,15 +68,15 @@ public class Worker extends Human {
         return workplaceCost;
     }
 
-    public Double getChanceToGetSick() {
+    public Integer getChanceToGetSick() {
         return chanceToGetSick;
     }
 
-    public Double getRiskOfCorrection() {
+    public Integer getRiskOfCorrection() {
         return riskOfCorrection;
     }
 
-    public Double getRiskOfDelay() {
+    public Integer getRiskOfDelay() {
         return riskOfDelay;
     }
 

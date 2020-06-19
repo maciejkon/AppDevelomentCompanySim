@@ -7,8 +7,6 @@ import java.util.List;
 
 public class Seller extends Worker {
 
-    private List<Technology> listOfSkills = new ArrayList<>();
-
     public Seller(String name, String surname, Double money) {
         super(name, surname, money);
         setRoleInCompany(WorkerRoleInCompany.SELLER);
@@ -16,7 +14,9 @@ public class Seller extends Worker {
         setMaintenanceCost(50.0);
         setCostOfDismissal(1000.0);
         setWorkplaceCost(10.0);
-        this.listOfSkills.add(new Technology("Sprzedawanie", 1));
+        List<Technology> listOfSkills = new ArrayList<>();
+        listOfSkills.add(new Technology("Sprzedawanie", 1));
+        setListOfSkills(listOfSkills);
     }
 
 }

@@ -1,11 +1,13 @@
 package com.company.business.People.Worker;
 
+import com.company.business.People.Human;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class WorkerMarket {
     private List<Worker> listOfWorkers;
-    private List<Subcontractor> listOfSubcontractors = new ArrayList<>();
+    private List<Human> listOfSubcontractors = new ArrayList<>();
 
     public WorkerMarket() {
         WorkerGenerator gen = new WorkerGenerator();
@@ -28,7 +30,7 @@ public class WorkerMarket {
         return listOfWorkers;
     }
 
-    public List<Subcontractor> getListOfSubcontractors() {
+    public List<Human> getListOfSubcontractors() {
         return listOfSubcontractors;
     }
 

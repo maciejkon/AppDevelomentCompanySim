@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Tester extends Worker {
 
-    private List<Technology> listOfSkills = new ArrayList<>();
 
     public Tester(String name, String surname, Double money) {
         super(name, surname, money);
@@ -16,6 +15,8 @@ public class Tester extends Worker {
         setMaintenanceCost(50.0);
         setCostOfDismissal(1000.0);
         setWorkplaceCost(10.0);
-        this.listOfSkills.add(new Technology("Testowanie", 1));
+        List<Technology> listOfSkills = new ArrayList<>();
+        listOfSkills.add(new Technology("Testowanie", 1));
+        setListOfSkills(listOfSkills);
     }
 }

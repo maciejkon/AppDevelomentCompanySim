@@ -38,6 +38,7 @@ public class Company {
         List<Project> randProj = gen.generate(3);
         boolean choose = false;
         while (choose != true) {
+            Integer number;
             if (this.currentDaysOfLookingForNewClient >= 5) {
                 int numberOfProjects = currentDaysOfLookingForNewClient / 5;
                 List<Project> randProjAfterSearching = gen.generate(numberOfProjects);
@@ -48,9 +49,9 @@ public class Company {
                 currentDaysOfLookingForNewClient -= numberOfProjects * 5;
                 System.out.println("Dodano: " + randProjAfterSearching.size());
             }
-            Integer number;
             for (int i = 0; i < randProj.size(); i++) {
                 randProj.get(i).setTimeOfAddingProject(now);
+                randProj.get(i).setDeadLine(now.plusDays(15));
                 System.out.println(i + 1 + ". " + randProj.get(i).toString());
             }
             System.out.println("Wybierz project lub wciśnij 0 zeby wyjść: ");
@@ -85,7 +86,6 @@ public class Company {
                     choose = true;
                 }
             }
-
         }
     }
 
@@ -102,7 +102,7 @@ public class Company {
             for (int i = 0; i < listOfWorkers.size(); i++) {
                 if (listOfWorkers.get(i).getRoleInCompany().equals(WorkerRoleInCompany.SELLER)) {
                     this.currentDaysOfLookingForNewClient++;
-                    System.out.println("Dzień poświęcony na szukanie klientów");
+                    System.out.println("Dzień poświęcony na szukanie klientów. Liczba dnia ogółem: " + currentDaysOfLookingForNewClient);
                     newDay();
                     sellerFlag = true;
                     choose = true;
@@ -134,6 +134,7 @@ public class Company {
             }
             System.out.println("Wybierz project lub wciśnij 0 żeby wyjść: ");
             numberOfProject = in.nextInt();
+
             if (numberOfProject == 0) {
                 break;
             }
@@ -141,12 +142,61 @@ public class Company {
                 System.out.println("Niepoprawna liczba, spróbuj ponownie!");
                 continue;
             }
+
             Project selectedProject = listOfProjects.get(numberOfProject - 1);
+
             if (selectedProject.getCurrentDaysOfWork() == selectedProject.getRequiredDaysOfWork()) {
                 System.out.println("UWAGA!! Ten projekt jest gotowy do oddania ");
             } else {
+                int number;
                 if (selectedProject.getListOfWorkersInProject().isEmpty()) {
-                    selectedProject.addWorkerToTheProject(chooseWorkerInProject());
+                    System.out.println("Wybierz kogo wybierasz do pracy przy projekcie: ");
+                    if (getCurrentDate().getDayOfWeek().equals(DayOfWeek.SATURDAY) ||
+                            getCurrentDate().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+                        System.out.println("Jest weekend, więc pracować możesz tylko ty!\n");
+                        System.out.println("1.Właściciel");
+                    } else {
+                        System.out.println("1.Właściciel\n2.Pracownicy\n3.Podwykonawcy");
+                    }
+                    number = in.nextInt();
+
+                    switch (number) {
+                        case 1:
+                            selectedProject.addWorkerToTheProject(owner);
+                            break;
+                        case 2:
+                            for (int i = 0; i < listOfWorkers.size(); i++) {
+                                System.out.println(i + 1 + ". " + listOfWorkers.get(i).toString());
+                            }
+                            int numberOfWorker;
+                            System.out.println("Wybierz pracownika: ");
+                            numberOfWorker = in.nextInt();
+
+                            if (!numberChecker(numberOfWorker, listOfWorkers)) {
+                                System.out.println("Niepoprawna liczba, spróbuj ponownie!");
+                                continue;
+                            }
+
+                            Human selectedWorker = listOfWorkers.get(numberOfWorker - 1);
+                            selectedProject.addWorkerToTheProject(selectedWorker);
+                            break;
+                        case 3:
+                            WorkerMarket market = new WorkerMarket();
+                            List<Human> listOfSubcontractors = market.getListOfSubcontractors();
+
+                            for (int i = 0; i < listOfSubcontractors.size(); i++) {
+                                System.out.println(i + 1 + ". " + listOfSubcontractors.get(i).toString());
+                            }
+                            int numberOfSubcontractor;
+                            System.out.println("Wybierz podwykonawce: ");
+                            numberOfSubcontractor = in.nextInt();
+
+                            Human selectedSubcontractor = listOfSubcontractors.get(numberOfSubcontractor - 1);
+                            setMoney(getMoney() - selectedSubcontractor.getMoney());
+                            selectedSubcontractor.setMoney(getMoney());
+                            selectedProject.addWorkerToTheProject(selectedSubcontractor);
+                            break;
+                    }
                 }
                 selectedProject.workOneDay();
                 newDay();
@@ -323,13 +373,20 @@ public class Company {
     }
 
     public void checkVictory() {
-        Integer numberOfHighComplexityProjects = 0;
+        Integer numberOfProjectsMeetingTheRequirements = 0;
+        Boolean projectGetBySeller = false;
         for (int i = 0; i < listOfDoneProjects.size(); i++) {
             if (listOfDoneProjects.get(i).getLevelOfComplexity().equals(ProjectComplexity.HIGH) &&
                     !listOfDoneProjects.get(i).getListOfWorkersInProject().contains(owner) &&
                     listOfProjects.get(i).getWasTestedByOwner().equals(false)) {
-                numberOfHighComplexityProjects++;
+                if (listOfDoneProjects.get(i).getGetBySeller().equals(true)) {
+                    projectGetBySeller = true;
+                }
+                numberOfProjectsMeetingTheRequirements++;
             }
+        }
+        if (numberOfProjectsMeetingTheRequirements == 3 && getMoney() > 1000) {
+            System.out.println("Wygrałeś");
         }
         //na liście zrobionych projektów 3 mają złożoność high
         //właściciel nie jest na listOfWorkerInProject
@@ -338,41 +395,32 @@ public class Company {
         // pieniężny stan koncowy wyższy od początkowego 
     }
 
+    public void checkPayment() {
+        for (int i = 0; i < listOfDoneProjects.size(); i++) {
+            if (listOfDoneProjects.get(i).getDateOfPayment().equals(getCurrentDate())) {
+                setMoney(getMoney() + listOfDoneProjects.get(i).getPriceOfProject());
+                System.out.println("SUCCESS! Otrzymałeś zapłatę za projekt: " + listOfDoneProjects.get(i).getTitleOfProject() +
+                        " w wysokości " + listOfDoneProjects.get(i).getPriceOfProject());
+            }
+        }
+    }
+
+    public void newMonthChecker() {
+        if (getCurrentDate().getMonthValue() != 1) {
+            if (currentDaysOfBookkeeping < 2) {
+                System.out.println("ZUS zamyka twoją firmę! Przegrałeś!");
+            }
+            Double constantCostOfWorkers = 0.0;
+            for (int i = 0; i < listOfWorkers.size(); i++) {
+                constantCostOfWorkers += listOfWorkers.get(i).getMaintenanceCost() + listOfWorkers.get(i).getWorkplaceCost();
+            }
+            setMoney(getMoney() - constantCostOfWorkers);
+        }
+    }
+
     private Boolean isChanceHappendWith(int probability) {
         Random rand = new Random();
         return rand.nextInt(100) < probability;
-    }
-
-
-    public Human chooseWorkerInProject() {
-        Integer number;
-        List<Human> tempListOfAllWorkers = new ArrayList<>();
-        if (now.getDayOfWeek().equals(DayOfWeek.SATURDAY) || now.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-            System.out.println("Weekend: Tylko właściciel może dzisiaj pracować\n");
-            tempListOfAllWorkers.add(owner);
-        } else {
-            System.out.println("Dzień roboczy: możesz wybrać właściciela lub pracownika\n");
-            tempListOfAllWorkers.add(owner);
-            tempListOfAllWorkers.addAll(listOfWorkers);
-            for (int i = 0; i < tempListOfAllWorkers.size(); i++) {
-                System.out.println(i + 1 + "Imię: " + tempListOfAllWorkers.get(i).getName() + " Nazwisko: " + tempListOfAllWorkers.get(i).getSurname());
-            }
-        }
-
-        number = in.nextInt();
-        return tempListOfAllWorkers.get(number - 1);
-    }
-
-    public Subcontractor chooseSubcontractorInProject() {
-        Integer number;
-        List<Subcontractor> tempListOfAllSubcontractors = new ArrayList<>();
-        System.out.println("Wybierz podwykonawcę: ");
-        for (int i = 0; i < tempListOfAllSubcontractors.size(); i++) {
-            System.out.println(i + 1 + ". " + tempListOfAllSubcontractors.get(i).toString());
-        }
-
-        number = in.nextInt();
-        return tempListOfAllSubcontractors.get(number - 1);
     }
 
     private List<Technology> getListOfSkillsInCompany() {

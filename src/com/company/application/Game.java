@@ -35,6 +35,8 @@ public class Game {
         company.addNewProject();
         Scanner in = new Scanner(System.in);
 
+        company.newMonthChecker();
+        company.checkPayment();
         company.showActualInfo();
         int number = menuObject.menu();
 
@@ -66,6 +68,8 @@ public class Game {
                     company.bookkeeping();
                     break;
             }
+            company.newMonthChecker();
+            company.checkPayment();
             company.showActualInfo();
 
             number = menuObject.menu();

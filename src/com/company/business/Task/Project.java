@@ -53,7 +53,7 @@ public class Project {
         this.requiredDaysOfWork = countDaysToFinish();
 
         this.deadLine = deadLine;
-        this.dateOfPayment = deadLine;
+        this.dateOfPayment = deadLine.plusDays(7);
 
     }
 
@@ -61,9 +61,13 @@ public class Project {
     public String toString() {
 
         return "\nNazwa projektu: " + titleOfProject + "\n"
-                + "Zapłata za projekt: " + priceOfProject + " zł" + "\n" + "Data oddania projektu: " + deadLine + "\n" + "Data otrzymania zapłaty: " + dateOfPayment + "\n" + "Przewidywana data skończenia projektu: " + timeOfAddingProject.plusDays(requiredDaysOfWork) + "\n" + "Poziom skomplikowania: "
-                + levelOfComplexity + "\n" + "Właściciel projektu: " + ownerOfTheProject + "\n" + "Wymagane technologie: " +
-                technologyInProjectList.toString() + "\n------------------";
+                + "Zapłata za projekt: "
+                + priceOfProject + " zł" + "\n" + "Data oddania projektu: "
+                + deadLine + "\n" + "Przewidywana data skończenia projektu (jeśli pracujesz nad nim codziennie) "
+                + timeOfAddingProject.plusDays(requiredDaysOfWork + 1) + "\n" + "Poziom skomplikowania: "
+                + levelOfComplexity + "\n" + "Właściciel projektu: "
+                + ownerOfTheProject + "\n" + "Wymagane technologie: "
+                + technologyInProjectList.toString() + getBySeller + "\n------------------";
     }
 
     public int countDaysToFinish() {
@@ -138,6 +142,10 @@ public class Project {
 
     public void setWasTested(Boolean wasTested) {
         this.wasTested = wasTested;
+    }
+
+    public void setDeadLine(LocalDate deadLine) {
+        this.deadLine = deadLine;
     }
 
     public Boolean getGetBySeller() {
