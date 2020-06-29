@@ -30,7 +30,7 @@ public class Company {
     public Company(Player owner) {
         this.now = LocalDate.of(2020, 01, 01);
         this.owner = owner;
-        this.money = 10000.0;
+        this.money = 1000.0;
     }
 
     public void addNewProject() {
@@ -372,28 +372,6 @@ public class Company {
         }
     }
 
-    public void checkVictory() {
-        Integer numberOfProjectsMeetingTheRequirements = 0;
-        Boolean projectGetBySeller = false;
-        for (int i = 0; i < listOfDoneProjects.size(); i++) {
-            if (listOfDoneProjects.get(i).getLevelOfComplexity().equals(ProjectComplexity.HIGH) &&
-                    !listOfDoneProjects.get(i).getListOfWorkersInProject().contains(owner) &&
-                    listOfProjects.get(i).getWasTestedByOwner().equals(false)) {
-                if (listOfDoneProjects.get(i).getGetBySeller().equals(true)) {
-                    projectGetBySeller = true;
-                }
-                numberOfProjectsMeetingTheRequirements++;
-            }
-        }
-        if (numberOfProjectsMeetingTheRequirements == 3 && getMoney() > 1000) {
-            System.out.println("Wygrałeś");
-        }
-        //na liście zrobionych projektów 3 mają złożoność high
-        //właściciel nie jest na listOfWorkerInProject
-        //właściciel nie testował, więc mamy testera
-        //jeden projekt znaleziony przez sprzedawce(jakieśoznaczenie na tym projekcie
-        // pieniężny stan koncowy wyższy od początkowego 
-    }
 
     public void checkPayment() {
         for (int i = 0; i < listOfDoneProjects.size(); i++) {

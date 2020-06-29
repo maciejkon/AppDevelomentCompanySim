@@ -3,7 +3,6 @@ package com.company.application;
 import com.company.business.People.Worker.Player;
 import com.company.business.company.Company;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
@@ -28,7 +27,7 @@ public class Game {
         return new Player(name, surname);
     }
 
-    public void startGame() throws IOException {
+    public void startGame() {
         Menu menuObject = new Menu();
 
         company.showWelcomeInfo();
