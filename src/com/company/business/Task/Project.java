@@ -107,6 +107,7 @@ public class Project {
         this.listOfWorkersInProject.add(human);
     }
 
+
     public Double getPriceOfProject() {
         return priceOfProject;
     }
