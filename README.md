@@ -1,4 +1,4 @@
-# Project Name
+# App development company symulation
 A console game that simulates a software company. The game was written in Java.
 
 ## Table of Contents
