@@ -1,4 +1,4 @@
-# App development company symulation
+# App development company simulation
 A console game that simulates a software company. The game was written in Java.
 
 ## Table of Contents
